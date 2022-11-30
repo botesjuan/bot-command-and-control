@@ -1,3 +1,4 @@
+#!/bin/python3
 import enum
 import socket
 from threading import Thread
